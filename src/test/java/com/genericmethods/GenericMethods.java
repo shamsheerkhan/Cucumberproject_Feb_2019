@@ -7,12 +7,19 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -23,13 +30,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import com.extentreports.MakeExtentReports;
+import utils.MakeExtentReport;
+import utils.Reports_utils;
 
-public class GenericMethods extends MakeExtentReports{
+
+
+public class GenericMethods extends MakeExtentReport {
 	public static WebDriver driver;
-	public static XSSFWorkbook book;
-	public static XSSFSheet sheet;
-	public static File f;
+	
 
 	// ****************************************GENERICMETHODS**********************//
 	/*
@@ -44,11 +52,16 @@ public class GenericMethods extends MakeExtentReports{
 	 * Sprint #:=
 	 */
 	// ********************************************************************************//
-	public static void hoverAndClick(WebElement element) {
+	public static void hoverAndClick(WebElement element)  {
 
 		try {
 			// Wait till the WebElement is Displayed
 			new WebDriverWait(driver, 5).until(ExpectedConditions.visibilityOf(element));
+			JavascriptExecutor js = ((JavascriptExecutor) driver);
+			for (int i = 0; i <= 3; i++) {
+				js.executeScript("arguments[0].style.border='2px solid red'", element);
+			}
+						
 			Actions ass = new Actions(driver);
 			ass.moveToElement(element).click(element).build().perform();
 
@@ -261,122 +274,6 @@ public class GenericMethods extends MakeExtentReports{
 		return linkurl;
 	}
 
-	// **************************************************************//
-	/*
-	 * Method Name := loadexcelfile()
-	 * 
-	 * Input Parameter := Test-Data_Path
-	 * 
-	 * OutPut Parameter :=
-	 * 
-	 * Designer #:= shamsheer
-	 * 
-	 * Sprint #:=
-	 */
-	// ********************************************************************************//
-	public static void loadexcelfile(String path) {
-		System.out.println("Loading Excel File");
-		boolean status = verifyFileExist(path);
-		if (status) {
-			try {
-				FileInputStream file = new FileInputStream(f);
-				try {
-					book = new XSSFWorkbook(file);
-				} catch (IOException e) {
-
-					System.out.println("Work book can't opened");
-				}
-				System.out.println("File Loaded Successfully");
-
-			} catch (FileNotFoundException e) {
-
-				e.printStackTrace();
-			}
-
-		} else {
-			System.out.println("No file available under specified path " + path);
-		}
-
-	}
-
-	// **************************************************************//
-	/*
-	 * Method Name := verifyFileExist()
-	 * 
-	 * Input Parameter := Test-Data_Path
-	 * 
-	 * OutPut Parameter := status
-	 * 
-	 * Designer #:= shamsheer
-	 * 
-	 * Sprint #:=
-	 */
-	// ********************************************************************************//
-	public static boolean verifyFileExist(String path) {
-		boolean status = false;
-		try {
-			f = new File(path);
-			status = true;
-		} catch (Exception e) {
-			System.out.println("File not Existed in path " + path);
-		}
-
-		return status;
-
-	}
-
-	// **************************************************************//
-	/*
-	 * Method Name := getRowCountt()
-	 * 
-	 * Input Parameter := sheetName
-	 * 
-	 * OutPut Parameter := Total Row count
-	 * 
-	 * Designer #:= shamsheer
-	 * 
-	 * Sprint #:=
-	 */
-	// ********************************************************************************//
-	public static int getRowCountt(String sheetname) {
-		int rowcount = 0;
-		try {
-			sheet = book.getSheet(sheetname);
-			rowcount = sheet.getPhysicalNumberOfRows();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return rowcount;
-
-	}
-
-	// **************************************************************//
-	/*
-	 * Method Name := getColumnCountt()
-	 * 
-	 * Input Parameter := sheetName
-	 * 
-	 * OutPut Parameter := Total Column count
-	 * 
-	 * Designer #:= shamsheer
-	 * 
-	 * Sprint #:=
-	 */
-	// ********************************************************************************//
-	public static int getColumnCountt(String sheetname) {
-		int columncount = 0;
-		try {
-
-			columncount = sheet.getRow(0).getPhysicalNumberOfCells();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return columncount;
-
-	}
-
 	// *******************************************************************************//
 	/*
 	 * Method Name := verifyTitle_of_page()
@@ -454,7 +351,7 @@ public class GenericMethods extends MakeExtentReports{
 	 * Sprint #:=
 	 */
 //********************************************************************************//
-	public static void verify_single_child_tab_title(WebElement element, String title) {
+	public static void verify_single_child_tab_title(WebElement element, String title) throws IOException {
 		hoverAndClick(element);
 		Set<String> handler = driver.getWindowHandles();
 		Iterator<String> it = handler.iterator();
@@ -477,7 +374,7 @@ public class GenericMethods extends MakeExtentReports{
 	/*
 	 * Method Name := select_value_from_dropdown()
 	 * 
-	 * Input Parameter := Element, visible  value
+	 * Input Parameter := Element, visible value
 	 * 
 	 * OutPut Parameter := NA
 	 * 
@@ -489,7 +386,6 @@ public class GenericMethods extends MakeExtentReports{
 	public static void select_value_from_dropdown(WebElement element, String value) {
 		Select select = new Select(element);
 		select.selectByValue(value);
-		
 
 	}
 
@@ -509,10 +405,11 @@ public class GenericMethods extends MakeExtentReports{
 	// ********************************************************************************//
 	public static void select_text_value_from_dropdown(WebElement element, String value) {
 		Select select = new Select(element);
-		
+
 		select.selectByVisibleText(value);
 
 	}
 
 	// ***********************************************************************************//
+
 }

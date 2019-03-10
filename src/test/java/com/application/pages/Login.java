@@ -249,21 +249,23 @@ public class Login extends GenericMethods{
 	 * Sprint #:=
 	 */
 	//********************************************************************
-	public static Create_an_account click_t_shirts() {
+	public static Create_an_account click_createaccount() {
 		boolean flag = false;
 		try {
 
-			// Hover and Click on the t_shirts link
+			// Hover and Click on the createaccount button 
 			hoverAndClick(btn_createaccount);
+			logStatus("pass", "Successfully createaccount button clicked");
 			flag = true;
-
+			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logStatus("fail", "Not Successfully createaccount button clicked");
+			e.printStackTrace();
 		}
 		if (flag)
-			System.out.println("Successfully T_shirts Link clicked");
+			System.out.println("Successfully createaccount button clicked");
 		else
-			System.out.println("T_shirts Link Not clicked");
+			System.out.println("createaccount button Not clicked");
 		return new Create_an_account();
 	}
 

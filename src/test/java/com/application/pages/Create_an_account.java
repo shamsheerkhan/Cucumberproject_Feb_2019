@@ -145,11 +145,14 @@ public class Create_an_account extends GenericMethods {
 		String gender=arg1;
 		if(gender.equalsIgnoreCase("Mr")) {
 			hoverAndClick(btn_male);
+			
 		}else if(gender.equalsIgnoreCase("Ms")) {
 			hoverAndClick(btn_female);
+			
 		}
 		else {
 			hoverAndClick(btn_male);
+			
 		}
 		try {
 			edi_personalinformation_firstname.sendKeys(arg2);
@@ -253,12 +256,14 @@ public class Create_an_account extends GenericMethods {
 			boolean flag=false;
 			try{
 						
-			//Hover and Click on the women link
+			//Hover and Click on the Register link
 			hoverAndClick(btn_register);
+			logStatus("pass", "Successfully clicked on Register button");
 			flag=true;
 						
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				logStatus("fail", "Not Successfully clicked on Register button");
+				e.printStackTrace();
 			}
 			if(flag)
 				System.out.println("Successfully Register Link clicked");

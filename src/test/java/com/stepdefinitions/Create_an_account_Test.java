@@ -8,6 +8,7 @@ import com.application.pages.Home;
 import com.application.pages.Login;
 import com.application.pages.My_account;
 import com.genericmethods.GenericMethods;
+import com.write_excel.WriteExcelData;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -18,6 +19,7 @@ public class Create_an_account_Test extends GenericMethods {
 	public static Create_an_account createaccount;
 	public static My_account myaccount;
 	static String temp_email="";
+	public static WriteExcelData write;
 
 	@Given("^user has to launch the browser browser name \"(.*?)\" and url \"(.*?)\" and navigate to login page$")
 	public void user_has_to_launch_the_browser_browser_name_and_url_and_navigate_to_login_page(String arg1, String arg2)  {
@@ -27,12 +29,15 @@ public class Create_an_account_Test extends GenericMethods {
 	    myaccount=new My_account();
 	    login=home.click_signin();
 	    
+	    
 	}
 	@Then("^user should identify the Authentification Section parameters of login page$")
 	public void user_should_identify_the_Authentification_Section_parameters_of_login_page() {
 		try {
 			login.verify_Authentication_parameters();
+			logStatus("pass", "Successfully verifyed the Authentication parameters");
 		} catch (Exception e) {
+			logStatus("fail", "Not Successfully verifyed the Authentication parameters");
 			e.printStackTrace();
 		}
 	}
@@ -46,7 +51,9 @@ public class Create_an_account_Test extends GenericMethods {
 			temp_email = arg1 + timestamp + "@gmail.com";
 			login.edi_createaccount_emailid.sendKeys(temp_email);
 			hoverAndClick(login.btn_createaccount);
+			logStatus("pass", "Successfully clicked on Create Account button");
 		} catch (Exception e) {
+			logStatus("fail", "Not Successfully clicked on Create Account button");
 			e.printStackTrace();
 		}
 	}
@@ -57,7 +64,9 @@ public class Create_an_account_Test extends GenericMethods {
 
 		try {
 			createaccount.fill_personal_information_section_fields(arg1, arg2, arg3, arg4, arg5);
+		logStatus("pass", "Successfully pesonal informaion section fields entered");
 		} catch (Exception e) {
+			logStatus("fail", "Not Successfully pesonal informaion section fields entered");
 			e.printStackTrace();
 		}
 	}
@@ -67,7 +76,9 @@ public class Create_an_account_Test extends GenericMethods {
 			String arg5, String arg6) {
 		try {
 			createaccount.fill_the_Address_section_fields(arg1, arg2, arg3, arg4, arg5, arg6);
+		logStatus("pass", "Successfully Address section fields entered");
 		} catch (Exception e) {
+			logStatus("fail", "Not Successfully Address section fields entered");
 			e.printStackTrace();
 		}
 	}
@@ -91,12 +102,15 @@ public class Create_an_account_Test extends GenericMethods {
 			login.edi_login_emailid.sendKeys(temp_email);
 			login.edi_login_password.sendKeys(arg1);
 			hoverAndClick(login.btn_login);
+			logStatus("pass", "Successfully validated SignIn fuctionality");
 			status = true;
 		} catch (Exception e) {
+			logStatus("fail", "Not Successfully validated SignIn fuctionality");
 			e.printStackTrace();
 		}
 		if(status) {
 			System.out.println("Successfully logined into account using email id "+temp_email+" and password "+arg1);
+			write.create_excel_file(temp_email, arg1,"arg2","arg3","login credentials",2);
 		}
 		else
 			System.out.println("Not Successfully logined into account using email id "+temp_email+" and password "+arg1);

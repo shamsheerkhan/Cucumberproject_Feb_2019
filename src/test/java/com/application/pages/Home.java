@@ -534,9 +534,11 @@ public class Home extends GenericMethods{
 						
 			try {
 				hoverAndClick(lnk_bestseller);
+				logStatus("pass","Successfully clicked on BestSeller link");
 				status=true;
 					}
 			catch(Exception e){
+				logStatus("fail","Not Successfully clicked on BestSeller link");
 				System.out.println(e.getMessage());
 				}
 			return status;		
@@ -673,7 +675,7 @@ public class Home extends GenericMethods{
 				status=true;
 				}
 			catch(Exception e){
-				System.out.println(e.getMessage()); 
+				e.printStackTrace(); 
 				}
 				return status;
 			}
@@ -698,10 +700,12 @@ public class Home extends GenericMethods{
 				
 				//Hover and Click on the contacts_us link
 				hoverAndClick(lnk_contacts_us);
+				logStatus("pass", "Successfully  clickd on contact_us link");
 				flag=true;
 					
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				logStatus("pass", " Not Successfully  clickd on contact_us link");
+				e.printStackTrace();
 			}
 			if(flag)
 				System.out.println("Successfully Contacts_us Link clicked");
@@ -730,14 +734,16 @@ public class Home extends GenericMethods{
 				
 				//Hover and Click on the signin link
 				hoverAndClick(lnk_signin);
+				logStatus("pass", "Successfully  clickd on signin link");
 				flag=true;
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				logStatus("fail", " Not Successfully  clickd on signin link");
+				e.printStackTrace();
 			}
 			if(flag) {
 				System.out.println("Successfully SignIn Link clicked");
-			logstatus("pass", "Successfully SignIn Link clicked");	
+			
 			}
 			else
 				System.out.println("SignIn Link Not clicked");
@@ -765,10 +771,11 @@ public class Home extends GenericMethods{
 					
 			//Hover and Click on the cart link
 			hoverAndClick(lnk_cart);
+			logStatus("pass", "Successfully  clickd on cart link");
 			flag=true;
-						
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				logStatus("fail", "Not Successfully  clickd on cart link");
+				e.printStackTrace();
 			}
 			if(flag)
 				System.out.println("Successfully Cart Link clicked");
@@ -797,10 +804,12 @@ public class Home extends GenericMethods{
 						
 			//Hover and Click on the women link
 			hoverAndClick(lnk_women);
+			logStatus("pass", "Successfully  clickd on women link");
 			flag=true;
 						
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				logStatus("fail", "Not Successfully  clickd on women link");
+				e.printStackTrace();
 			}
 			if(flag)
 				System.out.println("Successfully Women Link clicked");
@@ -830,9 +839,11 @@ public class Home extends GenericMethods{
 							
 			//Hover and Click on the dress link
 			hoverAndClick(lnk_dress);
+			logStatus("pass", "Successfully  clickd on dress link");
 			flag=true;				
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				logStatus("fail", "Not Successfully  clickd on dress link");
+				e.printStackTrace();
 			}
 			if(flag)
 				System.out.println("Successfully Dress Link clicked");
@@ -861,10 +872,12 @@ public class Home extends GenericMethods{
 							
 			//Hover and Click on the t_shirts link
 			hoverAndClick(lnk_t_shirts);
+			logStatus("pass", "Successfully  clickd on t_shirts link");
 			flag=true;
 								
 			}catch(Exception e){
-				System.out.println(e.getMessage());
+				logStatus("fail", "Not Successfully  clickd on t_shirts link");
+				e.printStackTrace();
 			}
 			if(flag)
 				System.out.println("Successfully T_shirts Link clicked");

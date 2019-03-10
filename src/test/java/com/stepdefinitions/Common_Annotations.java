@@ -1,22 +1,26 @@
 package com.stepdefinitions;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+
 import com.application.pages.Create_an_account;
 import com.application.pages.Home;
 import com.application.pages.Login;
 import com.application.pages.My_account;
-import com.extentreports.MakeExtentReports;
+
 import com.genericmethods.GenericMethods;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import utils.MakeExtentReport;
 
 
 public class Common_Annotations extends GenericMethods{
 	public static Home home;
 	
-	public static MakeExtentReports makereport;
+	public static MakeExtentReport mkreports;
 
 	
 	@Given("^User has to launch the browser browsername \"(.*?)\" and Navigate to Home page url \"(.*?)\"$")
@@ -32,17 +36,16 @@ public class Common_Annotations extends GenericMethods{
 	    tearDownBrowser();
 	}
 	@Before
-	public void initialize_report_for() {
+	public void initialize_report() {
 		
-		System.out.println("*********BEFORE******************");
-	makereport.initializereport("summary");	
-	makereport.startreport("summary");
+	mkreports.initialize_Report();
+		mkreports.startReport("summary");
+	}
 	
-	}
-
 	@After
-	public void publish_report() {
-		System.out.println("******************AFTER*******************");
-		makereport.endreport();
+	public void pulishReport() {
+		
+		mkreports.endReport();
 	}
+	
 }

@@ -41,10 +41,12 @@ public class My_account extends GenericMethods {
 
 			// Hover and Click on the Signout link
 			hoverAndClick(lnk_signout);
+			logStatus("pass", "Successfully Signout Link clicked");
 			flag = true;
 
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			logStatus("fail", "Not Successfully Signout Link clicked");
+			e.printStackTrace();
 		}
 		if (flag)
 			System.out.println("Successfully Signout Link clicked");
